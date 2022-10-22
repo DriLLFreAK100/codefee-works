@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@codefee-works/util-react-model": ["libs/util-react-model/src/index.ts"]
+      "@codefee-works/util-react-model": ["libs/util-react-model/src/index.ts"],
+      "@codefee/model": ["libs/util-model/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
