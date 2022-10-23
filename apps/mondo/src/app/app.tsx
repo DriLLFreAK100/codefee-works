@@ -1,38 +1,36 @@
 import styled from 'styled-components';
-import { useStore, withStore, defineStore } from '@codefee/model';
-import { v4 as uuid } from 'uuid';
+import { useModel } from '@codefee/model';
+
+import todoModel from './models/todo';
 
 const StyledApp = styled.div`
   // Your style here
 `;
 
-const Root = withStore(StyledApp);
-
-const model = defineStore('todo').withModel({
-  scope: 'todo',
-  state: {
-    todos: [] as string[],
-  },
-  actions: {
-    setTodos: (state, payload) => {
-      state.todos = [...state.todos, payload];
-      return { ...state };
-    },
-  },
-});
-
 export function App() {
-  const [store, actions] = useStore(model);
+  const [{ editingName, todos }, actions] = useModel(todoModel);
 
   return (
-    <Root>
+    <StyledApp>
       <ul>
-        {store.todos.map((t) => {
-          return <li key={t}>{t}</li>;
-        })}
+        {todos.map((todo: any) => (
+          <li key={todo.id}>
+            {todo.name}{' '}
+            <button onClick={() => actions.handleDelete(todo.id)}>
+              Delete
+            </button>
+          </li>
+        ))}
       </ul>
-      <button onClick={() => actions.setTodos(uuid())}>Push</button>
-    </Root>
+      <div>
+        <input
+          aria-label="todo-name-input"
+          value={editingName}
+          onChange={(e) => actions.handleSetEditingName(e.target.value)}
+        />
+        <button onClick={actions.handleCreate}>Save</button>
+      </div>
+    </StyledApp>
   );
 }
 
