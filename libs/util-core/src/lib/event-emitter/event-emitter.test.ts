@@ -71,4 +71,14 @@ describe('EventEmitter', () => {
     hub.clear();
     expect(hub.topicCount).toBe(0);
   });
+
+  test('should be able to pub and sub the same context value', () => {
+    const hub = new EventEmitter();
+
+    hub.subscribe('topic1', (data) => {
+      expect(data).toEqual({ todo: [123] });
+    });
+
+    hub.publish('topic1', { todo: [123] });
+  });
 });
