@@ -1,3 +1,5 @@
+import { EventEmitter } from '@codefee/utils';
+
 /**
  * Return an infer type with first arg in the function omitted
  */
@@ -58,6 +60,7 @@ export type Model<
  */
 export type ModelMeta = {
   definition: Model<any, any>;
+  eventEmitter: EventEmitter;
   state: any;
 };
 

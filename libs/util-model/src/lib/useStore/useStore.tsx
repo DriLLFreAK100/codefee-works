@@ -2,11 +2,12 @@ import {
   createContext,
   FC,
   ComponentClass,
-  useContext,
   useMemo,
   useReducer,
   Reducer,
+  useEffect,
 } from 'react';
+import { EventEmitter } from '@codefee/utils';
 import {
   defineModel,
   ReducerAction,
@@ -29,8 +30,12 @@ export const withStore = (Component: FC | ComponentClass) => {
 
 export const defineStore = (scope: string) => {
   const withModel: typeof defineModel = (model) => {
-    if (!GLOBAL_STORE[scope].definition) {
-      GLOBAL_STORE[scope].definition = defineModel(model);
+    if (!GLOBAL_STORE[scope]) {
+      GLOBAL_STORE[scope] = {
+        definition: defineModel(model),
+        eventEmitter: new EventEmitter(),
+        state: model.state,
+      };
     }
 
     return GLOBAL_STORE[scope].definition;
@@ -41,30 +46,42 @@ export const defineStore = (scope: string) => {
   };
 };
 
-const useStore = <S, A extends Record<string, ReducerAction<S>>>(
-  model: Model<S, A>
-): [S, ModelAction<A>] => {
+const useStore = <S, A extends Record<string, ReducerAction<S>>>({
+  scope,
+}: Model<S, A>): [S, ModelAction<A>] => {
+  const { definition, eventEmitter, state } = GLOBAL_STORE[scope];
+
   const reducer = useMemo(
     (): Reducer<S, Action<keyof A>> => (prevState, action) => {
-      return model.actions[action.type](prevState, action.payload) as S;
+      return definition.actions[action.type](prevState, action.payload) as S;
     },
-    [model.actions]
+    [definition.actions]
   );
 
-  // TODO: Research on scoped event emitting topic to implement
-  const [, dispatch] = useReducer(reducer, model.state);
-  const store = useContext(StoreContext);
+  const [store, dispatch] = useReducer(reducer, state);
 
   const dispatcher = useMemo(() => {
-    return Object.entries(model.actions).reduce((acc, curr) => {
+    return Object.entries(definition.actions).reduce((acc, curr) => {
       const [type] = curr;
       (acc as any)[type] = (payload: any) => dispatch({ type, payload });
 
       return acc;
     }, {} as ModelAction<A>);
-  }, [model.actions]);
+  }, [definition.actions]);
 
-  return [store[model.scope].state, dispatcher];
+  useEffect(() => {
+    eventEmitter.subscribe(scope, dispatch);
+
+    return () => {
+      eventEmitter.unsubscribe(scope, dispatch);
+    };
+  }, [eventEmitter, scope]);
+
+  useEffect(() => {
+    eventEmitter.publish(scope, store);
+  }, [eventEmitter, scope, store]);
+
+  return [store, dispatcher];
 };
 
 export default useStore;

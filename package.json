@@ -5,7 +5,10 @@
   "scripts": {
     "start": "nx serve",
     "build": "nx build",
-    "test": "nx test"
+    "test": "nx test",
+    "test:all": "nx run-many --all --target=test",
+    "util-model:test": "nx test --project=util-model",
+    "util-model:test:watch": "nx test --project=util-model --watch"
   },
   "private": true,
   "dependencies": {
