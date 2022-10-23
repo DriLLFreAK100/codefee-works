@@ -12,17 +12,17 @@ class EventEmitter {
       this.events[topic] = [];
     }
 
-    if (!this.events[topic].find(e => e === action)) {
+    if (!this.events[topic].find((e) => e === action)) {
       this.events[topic].push(action);
     }
   }
 
   public unsubscribe(topic: string, action: ArbitaryFunc): void {
-    this.events[topic] = this.events[topic]?.filter(e => e !== action);
+    this.events[topic] = this.events[topic]?.filter((e) => e !== action);
   }
 
-  public publish(topic: string, ...context: any[]): void {
-    this.events[topic].forEach(sub => {
+  public publish(topic: string, context: any): void {
+    this.events[topic].forEach((sub) => {
       sub(context);
     });
   }
