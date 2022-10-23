@@ -51,35 +51,33 @@ const useStore = <S, A extends Record<string, ReducerAction<S>>>({
 }: Model<S, A>): [S, ModelAction<A>] => {
   const { definition, eventEmitter, state } = GLOBAL_STORE[scope];
 
-  const reducer = useMemo(
-    (): Reducer<S, Action<keyof A>> => (prevState, action) => {
-      return definition.actions[action.type](prevState, action.payload) as S;
-    },
-    [definition.actions]
+  const replacer = useMemo(
+    (): Reducer<S, Action<keyof A>> => (_, action) => action.payload,
+    []
   );
 
-  const [store, dispatch] = useReducer(reducer, state);
+  const [store, dispatch] = useReducer(replacer, state);
 
   const dispatcher = useMemo(() => {
     return Object.entries(definition.actions).reduce((acc, curr) => {
       const [type] = curr;
-      (acc as any)[type] = (payload: any) => dispatch({ type, payload });
+      (acc as any)[type] = (payload: any) => {
+        const latestState = definition.actions[type](store, payload);
+        eventEmitter.publish(scope, latestState);
+      };
 
       return acc;
     }, {} as ModelAction<A>);
-  }, [definition.actions]);
+  }, [definition.actions, eventEmitter, scope, store]);
 
   useEffect(() => {
-    eventEmitter.subscribe(scope, dispatch);
+    const sync = (state: S) => dispatch({ type: '', payload: state });
+    eventEmitter.subscribe(scope, sync);
 
     return () => {
-      eventEmitter.unsubscribe(scope, dispatch);
+      eventEmitter.unsubscribe(scope, sync);
     };
   }, [eventEmitter, scope]);
-
-  useEffect(() => {
-    eventEmitter.publish(scope, store);
-  }, [eventEmitter, scope, store]);
 
   return [store, dispatcher];
 };
