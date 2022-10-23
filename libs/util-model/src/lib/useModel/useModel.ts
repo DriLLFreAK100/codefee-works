@@ -1,9 +1,9 @@
 import { useReducer, Reducer, useMemo } from 'react';
-import { Action, ActionProxy, Model, ModelAction } from '../base';
+import { Action, ModelAction, Model, ReducerAction } from '../base';
 
-const useModel = <S, A extends Record<string, ModelAction<S>>>(
+const useModel = <S, A extends Record<string, ReducerAction<S>>>(
   model: Model<S, A>
-): [S, ActionProxy<A>] => {
+): [S, ModelAction<A>] => {
   const reducer = useMemo(
     (): Reducer<S, Action<keyof A>> => (prevState, action) => {
       return model.actions[action.type](prevState, action.payload) as S;
@@ -19,7 +19,7 @@ const useModel = <S, A extends Record<string, ModelAction<S>>>(
       (acc as any)[type] = (payload: any) => dispatch({ type, payload });
 
       return acc;
-    }, {} as ActionProxy<A>);
+    }, {} as ModelAction<A>);
   }, [model.actions]);
 
   return [store, dispatcher];

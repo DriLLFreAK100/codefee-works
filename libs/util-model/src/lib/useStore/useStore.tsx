@@ -9,10 +9,10 @@ import {
 } from 'react';
 import {
   defineModel,
-  ModelAction,
+  ReducerAction,
   Model,
   Action,
-  ActionProxy,
+  ModelAction,
   GLOBAL_STORE,
 } from '../base';
 
@@ -41,9 +41,9 @@ export const defineStore = (scope: string) => {
   };
 };
 
-const useStore = <S, A extends Record<string, ModelAction<S>>>(
+const useStore = <S, A extends Record<string, ReducerAction<S>>>(
   model: Model<S, A>
-): [S, ActionProxy<A>] => {
+): [S, ModelAction<A>] => {
   const reducer = useMemo(
     (): Reducer<S, Action<keyof A>> => (prevState, action) => {
       return model.actions[action.type](prevState, action.payload) as S;
@@ -61,7 +61,7 @@ const useStore = <S, A extends Record<string, ModelAction<S>>>(
       (acc as any)[type] = (payload: any) => dispatch({ type, payload });
 
       return acc;
-    }, {} as ActionProxy<A>);
+    }, {} as ModelAction<A>);
   }, [model.actions]);
 
   return [store[model.scope].state, dispatcher];
