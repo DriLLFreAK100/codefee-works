@@ -21,11 +21,15 @@ const StoreContext = createContext<typeof GLOBAL_STORE>({});
 const StoreProvider = StoreContext.Provider;
 
 export const withStore = (Component: FC | ComponentClass) => {
-  return (props: any) => (
+  const StoreProvider$ = (props: any) => (
     <StoreProvider value={GLOBAL_STORE}>
       <Component {...props}></Component>
     </StoreProvider>
   );
+
+  StoreProvider$.displayName = 'StoreProvider';
+
+  return StoreProvider$;
 };
 
 export const defineStore = (scope: string) => {

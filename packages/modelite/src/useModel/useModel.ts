@@ -1,11 +1,11 @@
-import { useReducer, Reducer, useMemo } from 'react';
+import { useReducer, Reducer, useMemo, useCallback } from 'react';
 import { Action, ModelAction, Model, ReducerAction } from '../base';
 
 const useModel = <S, A extends Record<string, ReducerAction<S>>>(
   model: Model<S, A>
 ): [S, ModelAction<A>] => {
-  const reducer = useMemo(
-    (): Reducer<S, Action<keyof A>> => (prevState, action) => {
+  const reducer = useCallback<Reducer<S, Action<keyof A>>>(
+    (prevState, action) => {
       return model.actions[action.type](prevState, action.payload) as S;
     },
     [model.actions]
