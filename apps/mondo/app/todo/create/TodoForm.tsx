@@ -1,3 +1,4 @@
+'use client';
 import { defineModel, useModel } from 'modelite';
 
 const model = defineModel({
@@ -7,12 +8,13 @@ const model = defineModel({
   },
   actions: {
     setTodos: (state, payload) => {
-      return { ...state, todos: [...state.todos, payload] };
+      state.todos = [...state.todos, payload];
+      return { ...state };
     },
   },
 });
 
-export default function Web() {
+const TodoForm = () => {
   const [store, actions] = useModel(model);
 
   return (
@@ -25,4 +27,6 @@ export default function Web() {
       <button onClick={() => actions.setTodos(Math.random())}>Push</button>
     </>
   );
-}
+};
+
+export default TodoForm;

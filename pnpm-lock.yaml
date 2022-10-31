@@ -48,16 +48,20 @@ importers:
       '@types/react-dom': 18.0.8
       eslint: ^8.26.0
       eslint-config-custom: workspace:*
+      modelite: workspace:*
       next: ^13.0.0
       next-transpile-modules: 9.0.0
       react: ^18.2.0
       react-dom: ^18.2.0
       tsconfig: workspace:*
       typescript: ^4.8.4
+      utils: workspace:*
     dependencies:
+      modelite: link:../../packages/modelite
       next: 13.0.0_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
+      utils: link:../../packages/utils
     devDependencies:
       '@types/node': 17.0.45
       '@types/react': 18.0.24
@@ -75,6 +79,7 @@ importers:
       '@types/react': 18.0.17
       eslint: ^8.26.0
       eslint-config-custom: workspace:*
+      modelite: workspace:*
       next: ^13.0.0
       next-transpile-modules: 9.0.0
       react: ^18.2.0
@@ -84,6 +89,7 @@ importers:
       ui: workspace:*
       utils: workspace:*
     dependencies:
+      modelite: link:../../packages/modelite
       next: 13.0.0_qtpcxnaaarbm4ws7ughq6oxfve
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
