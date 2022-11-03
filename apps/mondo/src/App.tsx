@@ -1,0 +1,86 @@
+import { defineModel, useModel } from 'modelite';
+
+type TodoStatus = 'created' | 'in-progress' | 'completed';
+
+type Todo = {
+  id: string | number;
+  name: string;
+  description?: string;
+  status: TodoStatus;
+};
+
+type State = {
+  editingName: string;
+  todos: Todo[];
+};
+
+const initialState: State = {
+  editingName: '',
+  todos: [],
+};
+
+const todosModel = defineModel({
+  scope: 'todos',
+  state: {
+    ...initialState,
+  },
+  actions: {
+    handleCreate: (state: State, _) => {
+      if (state.editingName) {
+        return {
+          todos: [
+            ...state.todos,
+            {
+              id: Math.random(),
+              name: state.editingName,
+              status: 'created',
+            },
+          ],
+          editingName: '',
+        };
+      }
+      return state;
+    },
+    handleSetEditingName: (state: State, value: string) => {
+      return {
+        ...state,
+        editingName: value,
+      };
+    },
+    handleDelete: (state: State, id: string | number) => {
+      return {
+        ...state,
+        todos: state.todos.filter((t) => t.id !== id),
+      };
+    },
+  },
+});
+
+const App = () => {
+  const [{ editingName, todos }, actions] = useModel(todosModel);
+
+  return (
+    <>
+      <ul>
+        {todos.map((todo: any) => (
+          <li key={todo.id}>
+            {todo.name}{' '}
+            <button onClick={() => actions.handleDelete(todo.id)}>
+              Delete
+            </button>
+          </li>
+        ))}
+      </ul>
+      <div>
+        <input
+          aria-label="todo-name-input"
+          value={editingName}
+          onChange={(e) => actions.handleSetEditingName(e.target.value)}
+        />
+        <button onClick={actions.handleCreate}>Save</button>
+      </div>
+    </>
+  );
+};
+
+export default App;
