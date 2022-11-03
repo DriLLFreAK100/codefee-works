@@ -6,5 +6,6 @@ module.exports = {
     '@next/next/no-img-element': 0,
     'react/jsx-key': 'off',
     semi: 'error',
+    'no-unused-vars': 'error',
   },
 };

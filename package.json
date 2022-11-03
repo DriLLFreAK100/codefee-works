@@ -9,20 +9,30 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
+    "dev:mondo": "pnpm run dev --filter=mondo",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
     "test": "turbo run test",
     "test:coverage": "turbo run test:coverage",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "eslint-config-custom": "workspace:*",
+    "husky": "^8.0.0",
+    "lint-staged": "^13.0.3",
     "prettier": "latest",
     "turbo": "latest"
   },
   "engines": {
     "node": ">=14.0.0"
   },
-  "dependencies": {},
-  "packageManager": "pnpm@7.11.0"
+  "packageManager": "pnpm@7.11.0",
+  "lint-staged": {
+    "*.{js,ts,jsx,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{md,html}": "prettier --write"
+  }
 }

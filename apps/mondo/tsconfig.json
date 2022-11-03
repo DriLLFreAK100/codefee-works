@@ -19,7 +19,16 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "baseUrl": "src",
+    "paths": {
+      "@mondo/components/*": [
+        "components/*"
+      ],
+      "@mondo/typings": [
+        "typings"
+      ]
+    }
   },
   "include": [
     "src"
