@@ -1,4 +1,3 @@
-import { Button } from 'ui';
 import { defineModel, useModel } from 'modelite';
 
 const model = defineModel({
