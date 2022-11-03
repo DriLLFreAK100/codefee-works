@@ -1,16 +1,28 @@
 import { FC, PropsWithChildren } from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
+import styles from './RootLayout.module.less';
+
+const makeLinkClassName = ({ isActive }: { isActive: boolean }) => {
+  if (isActive) {
+    return styles['link--active'];
+  }
+  return undefined;
+};
 
 const RootLayout: FC<PropsWithChildren> = () => {
   return (
-    <div>
+    <div className="flex p-4">
       <nav>
         <ul>
           <li>
-            <Link to="/todo">Todo</Link>
+            <NavLink className={makeLinkClassName} to="/todo">
+              Todo
+            </NavLink>
           </li>
           <li>
-            <Link to="/settings">Settings</Link>
+            <NavLink className={makeLinkClassName} to="/settings">
+              Settings
+            </NavLink>
           </li>
         </ul>
       </nav>

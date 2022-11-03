@@ -1,4 +1,5 @@
 import { defineModel, useModel } from 'modelite';
+import { Input } from 'codefee-kit';
 
 type TodoStatus = 'created' | 'in-progress' | 'completed';
 
@@ -72,7 +73,7 @@ const TodoPage = () => {
         ))}
       </ul>
       <div>
-        <input
+        <Input
           aria-label="todo-name-input"
           value={editingName}
           onChange={(e) => actions.handleSetEditingName(e.target.value)}
