@@ -4,11 +4,14 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
     "lint": "eslint 'src/**/*.{js,ts,tsx}'",
-    "lint:fix": "eslint 'src/**/*.{js,ts,tsx}' --fix",
-    "preview": "vite preview"
+    "lint:fix": "eslint 'src/**/*.{js,ts,tsx}' --fix"
   },
   "dependencies": {
     "codefee-kit": "0.0.42-alpha.23",
@@ -20,9 +23,12 @@
     "styled-components": "^5.3.6"
   },
   "devDependencies": {
+    "@testing-library/react": "^13.4.0",
+    "@types/jest": "^29.2.0",
     "@types/react": "^18.0.22",
     "@types/react-dom": "^18.0.7",
     "@vitejs/plugin-react": "^2.2.0",
+    "@vitest/coverage-c8": "^0.24.3",
     "autoprefixer": "^10.4.13",
     "eslint": "^8.26.0",
     "eslint-config-custom": "workspace:*",
@@ -33,6 +39,7 @@
     "tsconfig": "workspace:*",
     "typescript": "^4.6.4",
     "vite": "^3.2.0",
-    "vite-tsconfig-paths": "^3.5.2"
+    "vite-tsconfig-paths": "^3.5.2",
+    "vitest": "^0.24.3"
   }
 }

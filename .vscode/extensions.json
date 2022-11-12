@@ -2,6 +2,7 @@
   "recommendations": [
     "esbenp.prettier-vscode",
     "dbaeumer.vscode-eslint",
-    "wayou.vscode-todo-highlight"
+    "wayou.vscode-todo-highlight",
+    "csstools.postcss"
   ]
 }

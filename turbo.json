@@ -20,6 +20,7 @@
       "cache": false
     },
     "test": {},
+    "test:watch": {},
     "test:coverage": {}
   }
 }
