@@ -1,3 +1,5 @@
+import { Typography } from 'codefee-kit';
+import i18n from 'i18n/i18n';
 import { FC, PropsWithChildren } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import styles from './RootLayout.module.less';
@@ -16,12 +18,12 @@ const RootLayout: FC<PropsWithChildren> = () => {
         <ul>
           <li>
             <NavLink className={makeLinkClassName} to="/todo">
-              Todo
+              <Typography>{i18n.get('Todo')}</Typography>
             </NavLink>
           </li>
           <li>
             <NavLink className={makeLinkClassName} to="/settings">
-              Settings
+              <Typography>{i18n.get('Settings')}</Typography>
             </NavLink>
           </li>
         </ul>
