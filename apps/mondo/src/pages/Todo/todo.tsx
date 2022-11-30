@@ -1,5 +1,5 @@
 import { defineModel, useModel } from 'modelite';
-import { Input } from 'codefee-kit';
+import { Input, Button } from 'codefee-kit';
 
 type TodoStatus = 'created' | 'in-progress' | 'completed';
 
@@ -78,7 +78,7 @@ const TodoPage = () => {
           value={editingName}
           onChange={(e) => actions.handleSetEditingName(e.target.value)}
         />
-        <button onClick={actions.handleCreate}>Save</button>
+        <Button onClick={actions.handleCreate}>Save</Button>
       </div>
     </>
   );
