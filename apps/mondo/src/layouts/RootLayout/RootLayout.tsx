@@ -46,15 +46,15 @@ const NavMenuItem: FC<NavMenuItemProps> = ({ item }) => {
 const RootLayout: FC<PropsWithChildren> = () => {
   return (
     <div className="flex p-4">
-      <nav>
-        <List className="pr-4">
+      <nav className={styles['nav']}>
+        <List>
           {MENU_ITEMS.map((item) => {
             return <NavMenuItem item={item} />;
           })}
         </List>
       </nav>
 
-      <div>
+      <div className="p-4">
         <Outlet />
       </div>
     </div>
