@@ -1,18 +1,12 @@
 import { FC, PropsWithChildren } from 'react';
 import { NavLink, Outlet, useMatch } from 'react-router-dom';
 import { Typography } from 'codefee-kit';
+import cls from 'classnames';
 
 import { List, ListItem } from '@mondo/components/List';
 import i18n from 'i18n/i18n';
 
 import styles from './RootLayout.module.less';
-
-const makeLinkClassName = ({ isActive }: { isActive: boolean }) => {
-  if (isActive) {
-    return styles['link--active'];
-  }
-  return undefined;
-};
 
 type MenuItem = {
   path: string;
@@ -38,9 +32,11 @@ const NavMenuItem: FC<NavMenuItemProps> = ({ item }) => {
   const { path, name } = item;
   const isMatched = useMatch(path);
 
+  const linkClassName = cls({ [styles['link--active']]: isMatched });
+
   return (
     <ListItem isActive={Boolean(isMatched)}>
-      <NavLink className={makeLinkClassName} to={path}>
+      <NavLink className={linkClassName} to={path}>
         <Typography>{name}</Typography>
       </NavLink>
     </ListItem>
