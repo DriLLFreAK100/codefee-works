@@ -1,7 +1,7 @@
-import { CircularProgress } from 'codefee-kit';
+import { FC } from 'react';
 
-const Settings = () => {
-  return <CircularProgress />;
+const Settings: FC = () => {
+  return <>Work in progress...</>;
 };
 
 export default Settings;
