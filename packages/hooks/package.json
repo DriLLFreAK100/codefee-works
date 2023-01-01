@@ -10,12 +10,14 @@
     "build": "tsc && vite build"
   },
   "dependencies": {
+    "lodash-es": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@testing-library/react": "^13.4.0",
     "@types/jest": "^29.2.0",
+    "@types/lodash-es": "^4.17.6",
     "@types/react": "^18.0.22",
     "@types/react-dom": "^18.0.7",
     "@vitejs/plugin-react": "^2.2.0",

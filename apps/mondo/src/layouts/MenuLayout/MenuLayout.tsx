@@ -6,7 +6,7 @@ import cls from 'classnames';
 import { List, ListItem } from '@mondo/components/List';
 import i18n from 'i18n/i18n';
 
-import styles from './RootLayout.module.less';
+import styles from './MenuLayout.module.less';
 
 type MenuItem = {
   path: string;
@@ -43,22 +43,22 @@ const NavMenuItem: FC<NavMenuItemProps> = ({ item }) => {
   );
 };
 
-const RootLayout: FC<PropsWithChildren> = () => {
+const MenuLayout: FC<PropsWithChildren> = () => {
   return (
     <div className="flex p-4">
       <nav className={styles['nav']}>
         <List>
           {MENU_ITEMS.map((item) => {
-            return <NavMenuItem item={item} />;
+            return <NavMenuItem key={item.path} item={item} />;
           })}
         </List>
       </nav>
 
-      <div className="p-4">
+      <div className="p-4 w-full">
         <Outlet />
       </div>
     </div>
   );
 };
 
-export default RootLayout;
+export default MenuLayout;
