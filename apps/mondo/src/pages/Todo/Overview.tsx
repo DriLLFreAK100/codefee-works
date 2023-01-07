@@ -1,14 +1,15 @@
 import { DataColumnDefinition, Table, Typography } from 'codefee-kit';
+import { Todo, TodoService } from 'generated';
 import i18n from 'i18n/i18n';
 import { useEffect, useState } from 'react';
 
 const useData = () => {
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState<Todo[]>([]);
 
   useEffect(() => {
-    fetch('http://localhost:8080/todo')
-      .then(async (r) => await r.json())
-      .then((r) => setTodos(r));
+    TodoService.getTodos().then((r) => {
+      setTodos(r);
+    });
   }, []);
 
   return { todos };
