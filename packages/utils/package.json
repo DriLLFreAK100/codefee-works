@@ -1,0 +1,23 @@
+{
+  "name": "utils",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "sideEffects": false,
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "build": "tsc && vite build"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.2.0",
+    "@vitest/coverage-c8": "^0.24.3",
+    "typescript": "^4.6.4",
+    "vite": "^3.2.0",
+    "vite-plugin-dts": "^1.6.6",
+    "vitest": "^0.24.3"
+  }
+}
