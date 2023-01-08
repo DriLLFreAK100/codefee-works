@@ -1,7 +1,9 @@
-import { DataColumnDefinition, Table, Typography } from 'codefee-kit';
+import { useEffect, useState } from 'react';
+import { Button, DataColumnDefinition, Table, Typography } from 'codefee-kit';
+import { useNavigate } from 'react-router-dom';
+
 import { Todo, TodoService } from 'generated';
 import i18n from 'i18n/i18n';
-import { useEffect, useState } from 'react';
 
 const useData = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -30,12 +32,18 @@ const colDefs: DataColumnDefinition[] = [
 
 const Overview = () => {
   const { todos } = useData();
+  const navigate = useNavigate();
+
+  const handleClickCreate = () => navigate('/todo/create');
 
   return (
-    <div>
-      <Typography type="h4">{i18n.get('Overview')}</Typography>
+    <>
+      <div className="flex justify-between pb-2">
+        <Typography type="h4">{i18n.get('Overview')}</Typography>
+        <Button onClick={handleClickCreate}>{i18n.get('+ Add Item')}</Button>
+      </div>
       <Table data={todos} colDefs={colDefs} />
-    </div>
+    </>
   );
 };
 
