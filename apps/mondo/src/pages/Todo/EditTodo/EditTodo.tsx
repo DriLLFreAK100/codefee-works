@@ -30,6 +30,7 @@ const EditTodo = () => {
             return (
               <>
                 <Input
+                  className="w-full"
                   label={i18n.get('Title')}
                   error={form.hasError('title')}
                   value={form.value.title}
@@ -49,8 +50,9 @@ const EditTodo = () => {
                   }
                 />
                 <Input
+                  className="w-full"
                   label={i18n.get('Tags')}
-                  value={form.value.tags}
+                  value={form.value.tags?.join(';')}
                   onChange={(e) =>
                     form.setValue({
                       ...form.value,

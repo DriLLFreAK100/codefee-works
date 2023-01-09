@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { FormDefinition, VirtualForm } from 'codefee-kit';
 import { notEmptyString } from 'codefee-kit/dist/components/Form/validators';
 
@@ -37,15 +37,15 @@ const actionTitle: Record<OpsType, string> = {
 const useEditTodoModel = () => {
   const { id } = useParams();
   const opsType: OpsType = id ? 'edit' : 'create';
+  const navigate = useNavigate();
 
   const { withLoading, isLoading } = useLoading();
-  const {
-    data,
-    isLoading: isFetchingData,
-    mutate,
-  } = useLoadable(() => (id ? TodoService.getTodo(Number(id)) : undefined), {
-    deps: [id],
-  });
+  const { data, isLoading: isFetchingData } = useLoadable(
+    () => (id ? TodoService.getTodo(Number(id)) : undefined),
+    {
+      deps: [id],
+    }
+  );
 
   const handleSubmit = useCallback(
     (form: VirtualForm<UpdateTodoRequest>) => async () => {
@@ -53,17 +53,21 @@ const useEditTodoModel = () => {
         const res = await form.validate();
 
         if (res.isValid) {
-          const data =
-            opsType === 'create'
-              ? await TodoService.createTodo(form.value)
-              : await TodoService.updateTodo(Number(id), form.value);
-
-          mutate(data);
-          form.reset();
+          if (opsType === 'create') {
+            await TodoService.createTodo(form.value);
+            navigate('/todo');
+          } else {
+            await TodoService.updateTodo(Number(id), {
+              ...form.value,
+              tags: form.value.tags
+                ? form.value.tags.filter((x) => Boolean(x))
+                : [],
+            });
+          }
         }
       });
     },
-    [id, mutate, opsType, withLoading]
+    [id, navigate, opsType, withLoading]
   );
 
   const formDef = useMemo(() => makeFormDef(data), [data]);
