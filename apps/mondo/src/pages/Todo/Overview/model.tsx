@@ -5,7 +5,8 @@ import { DataColumnDefinition, IconButton } from 'codefee-kit';
 import { useLoading } from 'hooks';
 
 import { Todo, TodoService } from '@mondo/generated';
-import Trash from '@mondo/components/Trash';
+import Trash from '@mondo/components/Icons/Trash';
+import Edit from '@mondo/components/Icons/Edit';
 
 const useTodoOverviewModel = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -52,16 +53,25 @@ const useTodoOverviewModel = () => {
       id: 3,
       field: 'operation',
       header: '',
-      size: 0.12,
+      size: 0.2,
       render: (_, todo: Todo) => {
         return (
-          <IconButton
-            variant="subtle"
-            className="text-error"
-            onClick={handleOpenDeleteDialog(todo)}
-          >
-            <Trash />
-          </IconButton>
+          <>
+            <IconButton
+              variant="subtle"
+              className="text-primary"
+              // onClick={handleOpenDeleteDialog(todo)}
+            >
+              <Edit />
+            </IconButton>
+            <IconButton
+              variant="subtle"
+              className="text-error"
+              onClick={handleOpenDeleteDialog(todo)}
+            >
+              <Trash />
+            </IconButton>
+          </>
         );
       },
     },
