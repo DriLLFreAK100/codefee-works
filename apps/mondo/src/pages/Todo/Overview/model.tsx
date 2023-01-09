@@ -7,34 +7,9 @@ import { useLoading } from 'hooks';
 import { Todo, TodoService } from '@mondo/generated';
 import Trash from '@mondo/components/Trash';
 
-export const colDefs: DataColumnDefinition[] = [
-  {
-    id: 1,
-    field: 'title',
-    header: 'Title',
-  },
-  {
-    id: 2,
-    field: 'description',
-    header: 'Description',
-  },
-  {
-    id: 3,
-    field: 'operation',
-    header: '',
-    size: 0.12,
-    render: () => {
-      return (
-        <IconButton variant="subtle" className="text-error">
-          <Trash />
-        </IconButton>
-      );
-    },
-  },
-];
-
 const useTodoOverviewModel = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
+  const [deleteTarget, setDeleteTarget] = useState<Todo | undefined>(undefined);
   const { isLoading, withLoading } = useLoading();
   const navigate = useNavigate();
 
@@ -43,6 +18,55 @@ const useTodoOverviewModel = () => {
     [navigate]
   );
 
+  const handleOpenDeleteDialog = useCallback(
+    (todo: Todo) => () => setDeleteTarget(todo),
+    []
+  );
+
+  const handleCloseDeleteDialog = useCallback(
+    () => setDeleteTarget(undefined),
+    []
+  );
+
+  const handleDelete = useCallback(async () => {
+    if (deleteTarget) {
+      setTodos((prev) => prev.filter((p) => p.id !== deleteTarget.id));
+      setDeleteTarget(undefined);
+
+      await withLoading(() => TodoService.deleteTodo(deleteTarget.id));
+    }
+  }, [deleteTarget, withLoading]);
+
+  const colDefs: DataColumnDefinition[] = [
+    {
+      id: 1,
+      field: 'title',
+      header: 'Title',
+    },
+    {
+      id: 2,
+      field: 'description',
+      header: 'Description',
+    },
+    {
+      id: 3,
+      field: 'operation',
+      header: '',
+      size: 0.12,
+      render: (_, todo: Todo) => {
+        return (
+          <IconButton
+            variant="subtle"
+            className="text-error"
+            onClick={handleOpenDeleteDialog(todo)}
+          >
+            <Trash />
+          </IconButton>
+        );
+      },
+    },
+  ];
+
   useEffect(() => {
     withLoading(async () => {
       const res = await TodoService.getTodos();
@@ -50,7 +74,16 @@ const useTodoOverviewModel = () => {
     });
   }, [withLoading]);
 
-  return { isLoading, todos, handleClickCreate };
+  return {
+    isLoading,
+    isOpenConfirmDelete: Boolean(deleteTarget),
+    todos,
+    colDefs,
+    handleClickCreate,
+    handleOpenDeleteDialog,
+    handleCloseDeleteDialog,
+    handleDelete,
+  };
 };
 
 export default useTodoOverviewModel;

@@ -1,10 +1,24 @@
-import { Button, LoadArea, Table, Typography } from 'codefee-kit';
+import {
+  Button,
+  ConfirmDialog,
+  LoadArea,
+  Table,
+  Typography,
+} from 'codefee-kit';
 
-import i18n from 'i18n/i18n';
-import useTodoOverviewModel, { colDefs } from './model';
+import i18n from '@mondo/i18n';
+import useTodoOverviewModel from './model';
 
 const Overview = () => {
-  const { isLoading, todos, handleClickCreate } = useTodoOverviewModel();
+  const {
+    isLoading,
+    isOpenConfirmDelete,
+    todos,
+    colDefs,
+    handleClickCreate,
+    handleCloseDeleteDialog,
+    handleDelete,
+  } = useTodoOverviewModel();
 
   return (
     <>
@@ -15,6 +29,15 @@ const Overview = () => {
       <LoadArea loading={isLoading}>
         <Table data={todos} colDefs={colDefs} />
       </LoadArea>
+
+      <ConfirmDialog
+        isOpen={isOpenConfirmDelete}
+        onConfirm={handleDelete}
+        onCancel={handleCloseDeleteDialog}
+        onClose={handleCloseDeleteDialog}
+      >
+        {i18n.get('Are you sure you want to delete this item?')}
+      </ConfirmDialog>
     </>
   );
 };

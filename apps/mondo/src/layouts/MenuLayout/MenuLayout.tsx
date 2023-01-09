@@ -4,7 +4,7 @@ import { Typography } from 'codefee-kit';
 import cls from 'classnames';
 
 import { List, ListItem } from '@mondo/components/List';
-import i18n from 'i18n/i18n';
+import i18n from '@mondo/i18n';
 
 import styles from './MenuLayout.module.less';
 

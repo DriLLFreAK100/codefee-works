@@ -8,8 +8,8 @@ import {
   LoadArea,
 } from 'codefee-kit';
 
-import { UpdateTodoRequest } from 'generated';
-import i18n from 'i18n/i18n';
+import { UpdateTodoRequest } from '@mondo/generated';
+import i18n from '@mondo/i18n';
 import useCreateTodoModel, { formDef } from './model';
 
 const CreateTodo = () => {

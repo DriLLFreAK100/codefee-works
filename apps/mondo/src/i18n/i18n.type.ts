@@ -1,5 +1,6 @@
 export type TranlationKeys =
   | '+ Add Item'
+  | 'Are you sure you want to delete this item?'
   | 'Create'
   | 'Create Todo'
   | 'Description'
