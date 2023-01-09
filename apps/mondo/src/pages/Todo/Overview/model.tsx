@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { DataColumnDefinition } from 'codefee-kit';
+import { DataColumnDefinition, IconButton } from 'codefee-kit';
 
-import { Todo, TodoService } from 'generated';
 import { useLoading } from 'hooks';
+
+import { Todo, TodoService } from '@mondo/generated';
+import Trash from '@mondo/components/Trash';
 
 export const colDefs: DataColumnDefinition[] = [
   {
@@ -15,6 +17,19 @@ export const colDefs: DataColumnDefinition[] = [
     id: 2,
     field: 'description',
     header: 'Description',
+  },
+  {
+    id: 3,
+    field: 'operation',
+    header: '',
+    size: 0.12,
+    render: () => {
+      return (
+        <IconButton variant="subtle" className="text-error">
+          <Trash />
+        </IconButton>
+      );
+    },
   },
 ];
 

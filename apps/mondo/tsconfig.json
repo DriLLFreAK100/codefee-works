@@ -25,6 +25,21 @@
       "@mondo/components/*": [
         "components/*"
       ],
+      "@mondo/generated": [
+        "generated"
+      ],
+      "@mondo/generated/*": [
+        "generated/*"
+      ],
+      "@mondo/i18n/*": [
+        "i18n/*"
+      ],
+      "@mondo/layouts/*": [
+        "layouts/*"
+      ],
+      "@mondo/pages/*": [
+        "pages/*"
+      ],
       "@mondo/typings": [
         "typings"
       ]
