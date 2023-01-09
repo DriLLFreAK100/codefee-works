@@ -43,20 +43,44 @@ export class TodoService {
   }
 
   /**
+   * Get todo by ID
+   * Get todo by ID
+   *
+   * @param id
+   * @returns Todo Get todo successfully
+   * @throws ApiError
+   */
+  public static getTodo(id: number): CancelablePromise<Todo> {
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/todo/{id}',
+      path: {
+        id: id,
+      },
+    });
+  }
+
+  /**
    * Update todo by ID
    * Update todo by ID
    *
    * @param id
+   * @param requestBody
    * @returns Todo Updated todo successfully
    * @throws ApiError
    */
-  public static updateTodo(id: number): CancelablePromise<Todo> {
+  public static updateTodo(
+    id: number,
+    requestBody: UpdateTodoRequest
+  ): CancelablePromise<Todo> {
     return __request(OpenAPI, {
       method: 'PUT',
       url: '/todo/{id}',
       path: {
         id: id,
       },
+      body: requestBody,
+      mediaType: 'application/json',
     });
   }
 

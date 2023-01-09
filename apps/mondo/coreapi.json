@@ -70,6 +70,39 @@
       }
     },
     "/todo/{id}": {
+      "get": {
+        "tags": [
+          "todo"
+        ],
+        "summary": "Get todo by ID",
+        "description": "Get todo by ID\n",
+        "operationId": "get_todo",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "deprecated": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get todo successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Todo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      },
       "put": {
         "tags": [
           "todo"
@@ -89,6 +122,16 @@
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTodoRequest"
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "Updated todo successfully",

@@ -10,15 +10,16 @@ import {
 
 import { UpdateTodoRequest } from '@mondo/generated';
 import i18n from '@mondo/i18n';
-import useCreateTodoModel, { formDef } from './model';
+import useEditTodoModel from './model';
 
-const CreateTodo = () => {
-  const { isLoading, handleSubmit } = useCreateTodoModel();
+const EditTodo = () => {
+  const { pageTitle, actionTitle, isLoading, formDef, handleSubmit } =
+    useEditTodoModel();
 
   return (
     <>
       <Typography type="h4" className="pb-2">
-        {i18n.get('Create Todo')}
+        {pageTitle}
       </Typography>
 
       <LoadArea loading={isLoading}>
@@ -60,7 +61,7 @@ const CreateTodo = () => {
 
                 <div className="flex justify-end">
                   <Button type="button" onClick={handleSubmit(form)}>
-                    {i18n.get('Create')}
+                    {actionTitle}
                   </Button>
                 </div>
               </>
@@ -72,4 +73,4 @@ const CreateTodo = () => {
   );
 };
 
-export default CreateTodo;
+export default EditTodo;

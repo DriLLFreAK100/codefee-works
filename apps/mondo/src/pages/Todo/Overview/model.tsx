@@ -19,6 +19,11 @@ const useTodoOverviewModel = () => {
     [navigate]
   );
 
+  const handleClickEdit = useCallback(
+    (todo: Todo) => () => navigate(`/todo/edit/${todo.id}`),
+    [navigate]
+  );
+
   const handleOpenDeleteDialog = useCallback(
     (todo: Todo) => () => setDeleteTarget(todo),
     []
@@ -60,7 +65,7 @@ const useTodoOverviewModel = () => {
             <IconButton
               variant="subtle"
               className="text-primary"
-              // onClick={handleOpenDeleteDialog(todo)}
+              onClick={handleClickEdit(todo)}
             >
               <Edit />
             </IconButton>
