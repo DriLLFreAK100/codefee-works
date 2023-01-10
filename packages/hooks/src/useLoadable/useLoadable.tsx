@@ -44,7 +44,7 @@ const useLoadable = <T extends any>(
           .then(() => setIsLoading(true))
           .then(() => loadFunc?.())
           .then((val) => setData(val))
-          .then(() => setIsLoading(false));
+          .finally(() => setIsLoading(false));
       }
     }, debounceRate),
     []
@@ -59,6 +59,7 @@ const useLoadable = <T extends any>(
   return {
     isLoading,
     data,
+    mutateTrigger,
     load: debounce((req) => load(req), debounceRate) as LoadFunc,
     reload,
     mutate,
