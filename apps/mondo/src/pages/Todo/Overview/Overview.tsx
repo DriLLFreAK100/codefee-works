@@ -1,6 +1,8 @@
 import {
   Button,
   ConfirmDialog,
+  Dialog,
+  DialogHeader,
   LoadArea,
   Table,
   Typography,
@@ -13,10 +15,12 @@ const Overview = () => {
   const {
     isLoading,
     isOpenConfirmDelete,
+    isOpenLink,
     todos,
     colDefs,
     handleClickCreate,
     handleCloseDeleteDialog,
+    handleCloseLinkDialog,
     handleDelete,
   } = useTodoOverviewModel();
 
@@ -38,6 +42,14 @@ const Overview = () => {
       >
         {i18n.get('Are you sure you want to delete this item?')}
       </ConfirmDialog>
+
+      <Dialog isOpen={isOpenLink} isMandatory>
+        <DialogHeader onClose={handleCloseLinkDialog}>
+          {i18n.get('Todo Links')}
+        </DialogHeader>
+
+        <main>{i18n.get('Work In-Progress...')}</main>
+      </Dialog>
     </>
   );
 };

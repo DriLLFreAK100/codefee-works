@@ -1,16 +1,17 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DataColumnDefinition, IconButton } from 'codefee-kit';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faTrash, faLink } from '@fortawesome/free-solid-svg-icons';
 
 import { useLoading } from 'hooks';
 
 import { Todo, TodoService } from '@mondo/generated';
-import Trash from '@mondo/components/Icons/Trash';
-import Edit from '@mondo/components/Icons/Edit';
 
 const useTodoOverviewModel = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [deleteTarget, setDeleteTarget] = useState<Todo | undefined>(undefined);
+  const [linkTarget, setLinkTarget] = useState<Todo | undefined>(undefined);
   const { isLoading, withLoading } = useLoading();
   const navigate = useNavigate();
 
@@ -33,6 +34,13 @@ const useTodoOverviewModel = () => {
     () => setDeleteTarget(undefined),
     []
   );
+
+  const handleOpenLinkDialog = useCallback(
+    (todo: Todo) => () => setLinkTarget(todo),
+    []
+  );
+
+  const handleCloseLinkDialog = useCallback(() => setLinkTarget(undefined), []);
 
   const handleDelete = useCallback(async () => {
     if (deleteTarget) {
@@ -65,16 +73,23 @@ const useTodoOverviewModel = () => {
             <IconButton
               variant="subtle"
               className="text-primary"
+              onClick={handleOpenLinkDialog(todo)}
+            >
+              <FontAwesomeIcon icon={faLink} />
+            </IconButton>
+            <IconButton
+              variant="subtle"
+              className="text-primary"
               onClick={handleClickEdit(todo)}
             >
-              <Edit />
+              <FontAwesomeIcon icon={faEdit} />
             </IconButton>
             <IconButton
               variant="subtle"
               className="text-error"
               onClick={handleOpenDeleteDialog(todo)}
             >
-              <Trash />
+              <FontAwesomeIcon icon={faTrash} />
             </IconButton>
           </>
         );
@@ -92,11 +107,14 @@ const useTodoOverviewModel = () => {
   return {
     isLoading,
     isOpenConfirmDelete: Boolean(deleteTarget),
+    isOpenLink: Boolean(linkTarget),
     todos,
     colDefs,
     handleClickCreate,
     handleOpenDeleteDialog,
     handleCloseDeleteDialog,
+    handleOpenLinkDialog,
+    handleCloseLinkDialog,
     handleDelete,
   };
 };
