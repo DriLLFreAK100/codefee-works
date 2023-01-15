@@ -50,8 +50,9 @@ const Overview = () => {
           {i18n.get('Todo Links')}
         </DialogHeader>
 
-        <TransferList />
-        <main>{i18n.get('Work In-Progress...')}</main>
+        <main>
+          <TransferList />
+        </main>
       </Dialog>
     </>
   );

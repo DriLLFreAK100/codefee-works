@@ -72,6 +72,7 @@ importers:
       react-is: ^18.2.0
       react-router-dom: ^6.4.3
       styled-components: ^5.3.6
+      tailwind-config: workspace:*
       tailwindcss: ^3.2.1
       tsconfig: workspace:*
       typescript: ^4.6.4
@@ -106,6 +107,7 @@ importers:
       modelite: link:../../packages/modelite
       openapi-typescript-codegen: 0.23.0
       postcss: 8.4.18
+      tailwind-config: link:../../packages/tailwind-config
       tailwindcss: 3.2.1_postcss@8.4.18
       tsconfig: link:../../packages/tsconfig
       typescript: 4.8.4
@@ -235,6 +237,14 @@ importers:
       vite: 3.2.1
       vite-plugin-dts: 1.6.6_vite@3.2.1
       vitest: 0.24.3
+
+  packages/tailwind-config:
+    specifiers:
+      postcss: ^8.4.18
+      tailwindcss: ^3.2.1
+    devDependencies:
+      postcss: 8.4.18
+      tailwindcss: 3.2.1_postcss@8.4.18
 
   packages/tsconfig:
     specifiers: {}

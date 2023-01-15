@@ -1,6 +1,6 @@
 const TransferList = () => {
   return (
-    <div className="flex">
+    <div className="flex justify-around w-full">
       <section>Left</section>
 
       <section>4 buttons</section>

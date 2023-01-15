@@ -66,7 +66,7 @@ const useTodoOverviewModel = () => {
       id: 3,
       field: 'operation',
       header: '',
-      size: 0.2,
+      fixedSize: 154,
       render: (_, todo: Todo) => {
         return (
           <>
