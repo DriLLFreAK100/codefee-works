@@ -39,7 +39,24 @@ module.exports = {
       'gray-5': 'var(--color-gray-5)',
       'gray-6': 'var(--color-gray-6)',
       'gray-7': 'var(--color-gray-7)',
+
+      backdrop: 'rgba(109,109,109,0.3)',
+      unset: 'unset',
     },
+    extend: {
+      zIndex: {
+        modal: '1000', // Modal
+        sidebar: '1100' // Side drawer
+      },
+      transitionProperty: {
+        'visibility-bg-color': 'visibility, background-color',
+        'spacing': 'margin, padding',
+      },
+      transitionDuration: {
+        'hover': 'var(--transition-hover)',
+        'toggle': 'var(--transition-toggle)',
+      },
+    }
   },
   plugins: [],
 };

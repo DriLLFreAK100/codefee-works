@@ -6,6 +6,8 @@ export type TranlationKeys =
   | 'Create Todo'
   | 'Description'
   | 'Edit Todo'
+  | 'Menu'
+  | 'Mondo'
   | 'Overview'
   | 'Save'
   | 'Settings'

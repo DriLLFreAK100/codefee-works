@@ -1,12 +1,13 @@
-import { FC, PropsWithChildren } from 'react';
+import { FC, PropsWithChildren, useState } from 'react';
 import { NavLink, Outlet, useMatch } from 'react-router-dom';
-import { Typography } from 'codefee-kit';
+import { IconButton, Typography } from 'codefee-kit';
 import cls from 'classnames';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 import { List, ListItem } from '@mondo/components/List';
 import i18n from '@mondo/i18n';
-
-import styles from './MenuLayout.module.less';
+import SideDrawer from '@mondo/components/SideDrawer';
 
 type MenuItem = {
   path: string;
@@ -32,7 +33,7 @@ const NavMenuItem: FC<NavMenuItemProps> = ({ item }) => {
   const { path, name } = item;
   const isMatched = useMatch(path);
 
-  const linkClassName = cls({ [styles['link--active']]: isMatched });
+  const linkClassName = cls({ ['text-primary']: isMatched });
 
   return (
     <ListItem isActive={Boolean(isMatched)}>
@@ -44,20 +45,40 @@ const NavMenuItem: FC<NavMenuItemProps> = ({ item }) => {
 };
 
 const MenuLayout: FC<PropsWithChildren> = () => {
-  return (
-    <div className="flex p-4">
-      <nav className={styles['nav']}>
-        <List>
-          {MENU_ITEMS.map((item) => {
-            return <NavMenuItem key={item.path} item={item} />;
-          })}
-        </List>
-      </nav>
+  const [showSideBar, setShowSideBar] = useState(false);
 
-      <div className="p-4 w-full">
+  const handleClickMenuIcon = () => {
+    setShowSideBar(true);
+  };
+
+  const handleClickCloseMenu = () => {
+    setShowSideBar(false);
+  };
+
+  return (
+    <>
+      <header className="flex items-center border-b border-gray-3 p-1">
+        <IconButton variant="subtle" onClick={handleClickMenuIcon}>
+          <FontAwesomeIcon icon={faBars}></FontAwesomeIcon>
+        </IconButton>
+
+        <Typography>{i18n.get('Mondo')}</Typography>
+      </header>
+
+      <div className="p-4">
         <Outlet />
       </div>
-    </div>
+
+      <SideDrawer show={showSideBar} onClose={handleClickCloseMenu}>
+        <nav>
+          <List>
+            {MENU_ITEMS.map((item) => {
+              return <NavMenuItem key={item.path} item={item} />;
+            })}
+          </List>
+        </nav>
+      </SideDrawer>
+    </>
   );
 };
 

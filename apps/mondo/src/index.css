@@ -4,7 +4,11 @@
 
 @layer base {
   html body {
-    font-family: var(--font-family-secondary);
+    font-family: var(--font-family-secondary);    
+  }
+
+  html body * {
+    border-style: solid;
   }
 }
 
