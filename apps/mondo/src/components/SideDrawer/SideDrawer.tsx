@@ -1,5 +1,5 @@
-import { forwardRef, HtmlHTMLAttributes, MouseEvent, useRef } from 'react';
-import { IconButton, Times, Typography, useExposeRef } from 'codefee-kit';
+import { forwardRef, HtmlHTMLAttributes, MouseEvent } from 'react';
+import { IconButton, Times, Typography } from 'codefee-kit';
 import cls from 'classnames';
 
 import i18n from '@mondo/i18n';
@@ -18,10 +18,6 @@ export type SideDrawerProps = {
 const SideDrawer = forwardRef<HTMLDivElement, SideDrawerProps>(
   (props: SideDrawerProps, ref) => {
     const { children, show, onClose, ...passThrough } = props;
-
-    const sideBarRef = useRef<HTMLDivElement>(null);
-    useExposeRef(ref as any, sideBarRef);
-
     const handleClickDrawerBody = (e: MouseEvent) => {
       e.stopPropagation();
     };
@@ -48,7 +44,7 @@ const SideDrawer = forwardRef<HTMLDivElement, SideDrawerProps>(
     return (
       <div className={backdropClass} onClick={onClose}>
         <div
-          ref={sideBarRef}
+          ref={ref}
           className={drawerClass}
           onClick={handleClickDrawerBody}
           {...passThrough}

@@ -1,5 +1,5 @@
-import { FC, PropsWithChildren, useState } from 'react';
-import { NavLink, Outlet, useMatch } from 'react-router-dom';
+import { FC, PropsWithChildren, useCallback, useEffect, useState } from 'react';
+import { NavLink, Outlet, useLocation, useMatch } from 'react-router-dom';
 import { IconButton, Typography } from 'codefee-kit';
 import cls from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -44,16 +44,28 @@ const NavMenuItem: FC<NavMenuItemProps> = ({ item }) => {
   );
 };
 
-const MenuLayout: FC<PropsWithChildren> = () => {
+const useMenuLayoutModel = () => {
   const [showSideBar, setShowSideBar] = useState(false);
+  let location = useLocation();
 
   const handleClickMenuIcon = () => {
     setShowSideBar(true);
   };
 
-  const handleClickCloseMenu = () => {
+  const handleClickCloseMenu = useCallback(() => {
     setShowSideBar(false);
-  };
+  }, []);
+
+  useEffect(() => {
+    handleClickCloseMenu();
+  }, [location, handleClickCloseMenu]);
+
+  return { showSideBar, handleClickMenuIcon, handleClickCloseMenu };
+};
+
+const MenuLayout: FC<PropsWithChildren> = () => {
+  const { showSideBar, handleClickMenuIcon, handleClickCloseMenu } =
+    useMenuLayoutModel();
 
   return (
     <>
