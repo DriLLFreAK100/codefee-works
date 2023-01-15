@@ -50,6 +50,7 @@ module.exports = {
       },
       transitionProperty: {
         'visibility-bg-color': 'visibility, background-color',
+        'bg-color': 'background-color',
         'spacing': 'margin, padding',
       },
       transitionDuration: {

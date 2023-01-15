@@ -107,7 +107,9 @@ const useTodoOverviewModel = () => {
   return {
     isLoading,
     isOpenConfirmDelete: Boolean(deleteTarget),
+    deleteTarget,
     isOpenLink: Boolean(linkTarget),
+    linkTarget,
     todos,
     colDefs,
     handleClickCreate,

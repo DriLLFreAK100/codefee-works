@@ -29,7 +29,15 @@
     transition: var(--transition-toggle);
   }
 
-  .border-radius-control {
+  .rounded-control {
     border-radius: var(--control-border-radius);
+  }
+
+  .h-control{
+    height: var(--control-height);
+  }
+
+  .w-control{
+    width: var(--control-height);
   }
 }

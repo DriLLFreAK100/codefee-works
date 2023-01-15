@@ -8,16 +8,16 @@ import {
   Typography,
 } from 'codefee-kit';
 
-import { TransferList } from 'ui';
-
 import i18n from '@mondo/i18n';
 import useTodoOverviewModel from './model';
+import TodoLinker from './TodoLinker';
 
 const Overview = () => {
   const {
     isLoading,
     isOpenConfirmDelete,
     isOpenLink,
+    linkTarget,
     todos,
     colDefs,
     handleClickCreate,
@@ -49,10 +49,7 @@ const Overview = () => {
         <DialogHeader onClose={handleCloseLinkDialog}>
           {i18n.get('Todo Links')}
         </DialogHeader>
-
-        <main>
-          <TransferList />
-        </main>
+        <TodoLinker todoId={linkTarget?.id!} allTodos={todos} />
       </Dialog>
     </>
   );
