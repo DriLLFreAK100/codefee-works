@@ -3,26 +3,26 @@ import cls from 'classnames';
 
 import IconButton from '../IconButton';
 
-type TransferListProps = {
+type TransferProps = {
   sourceTitle?: ReactNode;
-  sourceData: ListItem[];
+  sourceData: TransferListItem[];
   destinationTitle?: ReactNode;
-  destinationData: ListItem[];
+  destinationData: TransferListItem[];
 } & HtmlHTMLAttributes<HTMLDivElement>;
 
-type ListItem = {
+export type TransferListItem = {
   key: any;
   label: ReactNode;
   isSelected: boolean;
 };
 
-type ListProps = {
+type TransferListProps = {
   className: HtmlHTMLAttributes<HTMLDivElement>['className'];
   title: ReactNode;
-  data: ListItem[];
+  data: TransferListItem[];
 };
 
-const List = ({ title, data, className }: ListProps) => {
+const TransferList = ({ title, data, className }: TransferListProps) => {
   const $className = cls(
     'border border-gray-3 rounded-control flex-1',
     className
@@ -40,8 +40,8 @@ const List = ({ title, data, className }: ListProps) => {
   );
 };
 
-const TransferList = forwardRef<HTMLDivElement, TransferListProps>(
-  (props: TransferListProps, ref) => {
+const Transfer = forwardRef<HTMLDivElement, TransferProps>(
+  (props: TransferProps, ref) => {
     const {
       sourceData,
       sourceTitle,
@@ -52,7 +52,7 @@ const TransferList = forwardRef<HTMLDivElement, TransferListProps>(
 
     return (
       <div className="flex justify-between w-full" ref={ref} {...passThrough}>
-        <List className="mr-4" title={sourceTitle} data={sourceData} />
+        <TransferList className="mr-4" title={sourceTitle} data={sourceData} />
 
         <section className="flex flex-col [&>*]:mb-1">
           <IconButton variant="minimal">{'>'}</IconButton>
@@ -61,7 +61,7 @@ const TransferList = forwardRef<HTMLDivElement, TransferListProps>(
           <IconButton variant="minimal">{'<<'}</IconButton>
         </section>
 
-        <List
+        <TransferList
           className="ml-4"
           title={destinationTitle!}
           data={destinationData}
@@ -71,10 +71,10 @@ const TransferList = forwardRef<HTMLDivElement, TransferListProps>(
   }
 );
 
-TransferList.displayName = 'TransferList';
-TransferList.defaultProps = {
+Transfer.displayName = 'Transfer';
+Transfer.defaultProps = {
   sourceTitle: 'Source',
   destinationTitle: 'Destination',
 };
 
-export default TransferList;
+export default Transfer;
