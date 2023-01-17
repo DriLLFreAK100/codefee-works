@@ -254,6 +254,7 @@ importers:
       '@fortawesome/fontawesome-svg-core': ^6.2.1
       '@fortawesome/free-solid-svg-icons': ^6.2.1
       '@fortawesome/react-fontawesome': ^0.2.0
+      '@types/lodash-es': ^4.17.6
       '@types/react': ^18.0.17
       '@types/react-dom': ^18.0.6
       classnames: ^2.3.2
@@ -270,7 +271,6 @@ importers:
     dependencies:
       classnames: 2.3.2
       codefee-kit: 0.0.42-alpha.29_hu5ei52aymwvvvyw3nzwhohnxu
-      lodash-es: 4.17.21
       react-dom: 18.2.0_react@18.2.0
       react-is: 18.2.0
       styled-components: 5.3.6_7i5myeigehqah43i5u7wbekgba
@@ -278,10 +278,12 @@ importers:
       '@fortawesome/fontawesome-svg-core': 6.2.1
       '@fortawesome/free-solid-svg-icons': 6.2.1
       '@fortawesome/react-fontawesome': 0.2.0_z27bm67dtmuyyvss23ckjdrcuy
+      '@types/lodash-es': 4.17.6
       '@types/react': 18.0.24
       '@types/react-dom': 18.0.8
       eslint: 8.26.0
       eslint-config-custom: link:../eslint-config-custom
+      lodash-es: 4.17.21
       react: 18.2.0
       tsconfig: link:../tsconfig
       typescript: 4.8.4
@@ -3657,7 +3659,6 @@ packages:
 
   /lodash-es/4.17.21:
     resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
-    dev: false
 
   /lodash.get/4.4.2:
     resolution: {integrity: sha512-z+Uw/vLuy6gQe8cfaFWD7p0wVv8fJl3mbzXh33RS+0oW2wvUqiRXiQ69gLWSLpgB5/6sU+r6BlQR0MBILadqTQ==}

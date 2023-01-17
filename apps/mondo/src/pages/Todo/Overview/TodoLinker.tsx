@@ -12,26 +12,22 @@ type TodoLinkerProps = {
   allTodos: Todo[];
 };
 
-const notRelated =
-  (excludeId: number, relatedTodos: RelatedTodoResponse[]) => (target: Todo) =>
-    target.id !== excludeId &&
-    relatedTodos.find((tt) => tt.child_todo_id !== target.id);
+const notSelf = (id: number) => (target: Todo) => target.id !== id;
 
-const related =
-  (excludeId: number, relatedTodos: RelatedTodoResponse[]) => (target: Todo) =>
-    target.id !== excludeId &&
-    relatedTodos.find((tt) => tt.child_todo_id === target.id);
+const notLinked = (relatedTodos: RelatedTodoResponse[]) => (target: Todo) =>
+  !relatedTodos.find((tt) => tt.child_todo_id === target.id);
+
+const linked = (relatedTodos: RelatedTodoResponse[]) => (target: Todo) =>
+  relatedTodos.find((tt) => tt.child_todo_id === target.id);
 
 const asSource = (target: Todo) => ({
   key: target.id,
   label: target.title,
-  isSelected: false,
 });
 
 const asDestination = (target: Todo) => ({
   key: target.id,
   label: target.title,
-  isSelected: true,
 });
 
 const useData = (id: number, todos: Todo[]) => {
@@ -43,36 +39,60 @@ const useData = (id: number, todos: Todo[]) => {
 
   useEffect(() => {
     withLoading(async () => {
-      const res = await TodoService.getTodo(id);
+      if (id) {
+        const res = await TodoService.getTodo(id);
 
-      if (res.related_todos.length === 0) {
-        setData([todos.map(asSource), []]);
-        return;
+        if (res.related_todos.length === 0) {
+          setData([todos.filter(notSelf(id)).map(asSource), []]);
+          return;
+        }
+
+        setData([
+          todos
+            .filter(notSelf(id))
+            .filter(notLinked(res.related_todos))
+            .map(asSource),
+          todos
+            .filter(notSelf(id))
+            .filter(linked(res.related_todos))
+            .map(asDestination),
+        ]);
       }
-
-      setData([
-        todos.filter(notRelated(id, res.related_todos)).map(asSource),
-        todos.filter(related(id, res.related_todos)).map(asDestination),
-      ]);
     });
-  }, [withLoading]);
+  }, [id, todos, withLoading]);
 
-  return { isLoading, data };
+  const handleLinkTodos = async (
+    _: TransferListItem[],
+    destination: TransferListItem[]
+  ) => {
+    withLoading(() =>
+      TodoService.linkTodos(id, {
+        // TODO: Setup backend generated enum
+        relationship_type: 0,
+        todo_ids: destination.map((d) => d.key),
+      })
+    );
+  };
+
+  return { isLoading, data, handleLinkTodos };
 };
 
 const TodoLinker: FC<TodoLinkerProps> = ({ todoId, allTodos }) => {
   const {
     data: [source, destination],
+    handleLinkTodos,
     isLoading,
   } = useData(todoId, allTodos);
 
   return (
     <LoadArea loading={isLoading}>
       <Transfer
+        className="max-h-screen"
         sourceTitle={i18n.get('Source')}
         sourceData={source}
         destinationTitle={i18n.get('Linked')}
         destinationData={destination}
+        onValueChange={handleLinkTodos}
       />
     </LoadArea>
   );
