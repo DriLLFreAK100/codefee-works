@@ -4,7 +4,12 @@ import { Transfer, TransferListItem } from 'ui';
 import { useLoading } from 'hooks';
 
 import i18n from '@mondo/i18n';
-import { RelatedTodoResponse, Todo, TodoService } from '@mondo/generated';
+import {
+  RelatedTodoResponse,
+  Todo,
+  TodoRelationship,
+  TodoService,
+} from '@mondo/generated';
 import { LoadArea } from 'codefee-kit';
 
 type TodoLinkerProps = {
@@ -67,8 +72,7 @@ const useData = (id: number, todos: Todo[]) => {
   ) => {
     withLoading(() =>
       TodoService.linkTodos(id, {
-        // TODO: Setup backend generated enum
-        relationship_type: 0,
+        relationship_type: TodoRelationship.SUB_TASK,
         todo_ids: destination.map((d) => d.key),
       })
     );

@@ -7,6 +7,7 @@ import {
   Table,
   Typography,
 } from 'codefee-kit';
+import ReactMarkdown from 'react-markdown';
 
 import i18n from '@mondo/i18n';
 import useTodoOverviewModel from './model';
@@ -15,14 +16,12 @@ import TodoLinker from './TodoLinker';
 const Overview = () => {
   const {
     isLoading,
-    isOpenConfirmDelete,
-    isOpenLink,
-    linkTarget,
+    target,
     todos,
     colDefs,
+    isPerformAction,
     handleClickCreate,
-    handleCloseDeleteDialog,
-    handleCloseLinkDialog,
+    handleCloseDialog,
     handleDelete,
   } = useTodoOverviewModel();
 
@@ -37,19 +36,28 @@ const Overview = () => {
       </LoadArea>
 
       <ConfirmDialog
-        isOpen={isOpenConfirmDelete}
+        isOpen={isPerformAction('delete')}
         onConfirm={handleDelete}
-        onCancel={handleCloseDeleteDialog}
-        onClose={handleCloseDeleteDialog}
+        onCancel={handleCloseDialog}
+        onClose={handleCloseDialog}
       >
         {i18n.get('Are you sure you want to delete this item?')}
       </ConfirmDialog>
 
-      <Dialog isOpen={isOpenLink} isMandatory>
-        <DialogHeader onClose={handleCloseLinkDialog}>
+      <Dialog isOpen={isPerformAction('link')} isMandatory>
+        <DialogHeader onClose={handleCloseDialog}>
           {i18n.get('Todo Links')}
         </DialogHeader>
-        <TodoLinker todoId={linkTarget?.id!} allTodos={todos} />
+        <TodoLinker todoId={target?.id!} allTodos={todos} />
+      </Dialog>
+
+      <Dialog isOpen={isPerformAction('view')}>
+        <DialogHeader onClose={handleCloseDialog}>
+          {target?.title || ''}
+        </DialogHeader>
+        <ReactMarkdown className="markdown px-2">
+          {target?.description || ''}
+        </ReactMarkdown>
       </Dialog>
     </>
   );

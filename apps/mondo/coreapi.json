@@ -236,8 +236,7 @@
         ],
         "properties": {
           "relationship_type": {
-            "type": "integer",
-            "format": "int32"
+            "$ref": "#/components/schemas/TodoRelationship"
           },
           "todo_ids": {
             "type": "array",
@@ -355,6 +354,21 @@
             "format": "int32"
           }
         }
+      },
+      "TodoRelationship": {
+        "type": "string",
+        "enum": [
+          "SubTask",
+          "Dependency"
+        ]
+      },
+      "TodoStatus": {
+        "type": "string",
+        "enum": [
+          "InProgress",
+          "Done",
+          "Cancel"
+        ]
       },
       "UpdateTodoRequest": {
         "type": "object",

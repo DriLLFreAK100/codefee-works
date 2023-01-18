@@ -16,6 +16,7 @@ export type TranlationKeys =
   | 'Tags'
   | 'Title'
   | 'Todo'
+  | 'Todo Descriptions'
   | 'Todo Links'
   | 'Work In-Progress...';
 
