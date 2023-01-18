@@ -4,7 +4,7 @@ import MenuLayout from 'layouts/MenuLayout';
 import { withSuspense } from 'layouts/SuspenseLoader';
 
 const TodoPage = lazy(() => import('./pages/Todo'));
-const CreateTodoPage = lazy(() => import('./pages/Todo/CreateTodo'));
+const EditTodoPage = lazy(() => import('./pages/Todo/EditTodo'));
 const SettingsPage = lazy(() => import('./pages/Settings'));
 
 const router = createBrowserRouter([
@@ -18,7 +18,11 @@ const router = createBrowserRouter([
       },
       {
         path: 'todo/create',
-        element: withSuspense(CreateTodoPage),
+        element: withSuspense(EditTodoPage),
+      },
+      {
+        path: 'todo/edit/:id',
+        element: withSuspense(EditTodoPage),
       },
       {
         path: 'settings',

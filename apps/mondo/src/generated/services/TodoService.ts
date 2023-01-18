@@ -1,7 +1,9 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { LinkTodosRequest } from '../models/LinkTodosRequest';
 import type { Todo } from '../models/Todo';
+import type { TodoDetailsResponse } from '../models/TodoDetailsResponse';
 import type { UpdateTodoRequest } from '../models/UpdateTodoRequest';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -43,20 +45,68 @@ export class TodoService {
   }
 
   /**
+   * Link todos to a todo
+   * Link todos to a todo
+   *
+   * @param id
+   * @param requestBody
+   * @returns boolean Todos linked successfully
+   * @throws ApiError
+   */
+  public static linkTodos(
+    id: number,
+    requestBody: LinkTodosRequest
+  ): CancelablePromise<boolean> {
+    return __request(OpenAPI, {
+      method: 'PUT',
+      url: '/todo/link/{id}',
+      path: {
+        id: id,
+      },
+      body: requestBody,
+      mediaType: 'application/json',
+    });
+  }
+
+  /**
+   * Get todo by ID
+   * Get todo by ID
+   *
+   * @param id
+   * @returns TodoDetailsResponse Get todo successfully
+   * @throws ApiError
+   */
+  public static getTodo(id: number): CancelablePromise<TodoDetailsResponse> {
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/todo/{id}',
+      path: {
+        id: id,
+      },
+    });
+  }
+
+  /**
    * Update todo by ID
    * Update todo by ID
    *
    * @param id
+   * @param requestBody
    * @returns Todo Updated todo successfully
    * @throws ApiError
    */
-  public static updateTodo(id: number): CancelablePromise<Todo> {
+  public static updateTodo(
+    id: number,
+    requestBody: UpdateTodoRequest
+  ): CancelablePromise<Todo> {
     return __request(OpenAPI, {
       method: 'PUT',
       url: '/todo/{id}',
       path: {
         id: id,
       },
+      body: requestBody,
+      mediaType: 'application/json',
     });
   }
 

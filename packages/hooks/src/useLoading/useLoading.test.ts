@@ -14,3 +14,15 @@ test('should be able to show loading states correctly', async () => {
 
   await waitFor(() => expect(result.current.isLoading).toBeFalsy());
 });
+
+test('should set isLoading to false after action rejects', async () => {
+  const { result } = renderHook(() => useLoading());
+
+  act(async () => {
+    try {
+      await result.current.withLoading(() => Promise.reject());
+    } catch {}
+  });
+
+  expect(result.current.isLoading).toBeFalsy();
+});

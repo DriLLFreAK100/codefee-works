@@ -1,4 +1,4 @@
-import i18n from './i18n';
+import i18n from '.';
 
 describe('i18n', () => {
   test('should be able to get correct translation records', () => {

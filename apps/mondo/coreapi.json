@@ -69,7 +69,85 @@
         "deprecated": false
       }
     },
+    "/todo/link/{id}": {
+      "put": {
+        "tags": [
+          "todo"
+        ],
+        "summary": "Link todos to a todo",
+        "description": "Link todos to a todo\n",
+        "operationId": "link_todos",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "deprecated": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LinkTodosRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Todos linked successfully",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
     "/todo/{id}": {
+      "get": {
+        "tags": [
+          "todo"
+        ],
+        "summary": "Get todo by ID",
+        "description": "Get todo by ID\n",
+        "operationId": "get_todo",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "deprecated": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get todo successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TodoDetailsResponse"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      },
       "put": {
         "tags": [
           "todo"
@@ -89,6 +167,16 @@
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTodoRequest"
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "Updated todo successfully",
@@ -140,6 +228,41 @@
   },
   "components": {
     "schemas": {
+      "LinkTodosRequest": {
+        "type": "object",
+        "required": [
+          "todo_ids",
+          "relationship_type"
+        ],
+        "properties": {
+          "relationship_type": {
+            "$ref": "#/components/schemas/TodoRelationship"
+          },
+          "todo_ids": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      },
+      "RelatedTodoResponse": {
+        "type": "object",
+        "required": [
+          "relationship_type"
+        ],
+        "properties": {
+          "child_todo_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "relationship_type": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
       "Todo": {
         "type": "object",
         "required": [
@@ -169,6 +292,83 @@
             "type": "string"
           }
         }
+      },
+      "TodoDetailsResponse": {
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "status",
+          "related_todos"
+        ],
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "related_todos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RelatedTodoResponse"
+            }
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "title": {
+            "type": "string"
+          }
+        }
+      },
+      "TodoRelation": {
+        "type": "object",
+        "required": [
+          "id",
+          "relationship_type"
+        ],
+        "properties": {
+          "child_todo_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "parent_todo_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "relationship_type": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "TodoRelationship": {
+        "type": "string",
+        "enum": [
+          "SubTask",
+          "Dependency"
+        ]
+      },
+      "TodoStatus": {
+        "type": "string",
+        "enum": [
+          "InProgress",
+          "Done",
+          "Cancel"
+        ]
       },
       "UpdateTodoRequest": {
         "type": "object",

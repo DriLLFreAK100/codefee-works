@@ -10,8 +10,10 @@ const useLoading = <T, P>() => {
   const withLoading = useCallback(
     async (action: (...args: P[]) => Promise<T>) => {
       setIsLoading(true);
-      await action();
-      setIsLoading(false);
+
+      await Promise.resolve()
+        .then(() => action())
+        .finally(() => setIsLoading(false));
     },
     []
   );

@@ -8,17 +8,18 @@ import {
   LoadArea,
 } from 'codefee-kit';
 
-import { UpdateTodoRequest } from 'generated';
-import i18n from 'i18n/i18n';
-import useCreateTodoModel, { formDef } from './model';
+import { UpdateTodoRequest } from '@mondo/generated';
+import i18n from '@mondo/i18n';
+import useEditTodoModel from './model';
 
-const CreateTodo = () => {
-  const { isLoading, handleSubmit } = useCreateTodoModel();
+const EditTodo = () => {
+  const { pageTitle, actionTitle, isLoading, formDef, handleSubmit } =
+    useEditTodoModel();
 
   return (
     <>
       <Typography type="h4" className="pb-2">
-        {i18n.get('Create Todo')}
+        {pageTitle}
       </Typography>
 
       <LoadArea loading={isLoading}>
@@ -29,6 +30,7 @@ const CreateTodo = () => {
             return (
               <>
                 <Input
+                  className="w-full"
                   label={i18n.get('Title')}
                   error={form.hasError('title')}
                   value={form.value.title}
@@ -48,8 +50,9 @@ const CreateTodo = () => {
                   }
                 />
                 <Input
+                  className="w-full"
                   label={i18n.get('Tags')}
-                  value={form.value.tags}
+                  value={form.value.tags?.join(';')}
                   onChange={(e) =>
                     form.setValue({
                       ...form.value,
@@ -60,7 +63,7 @@ const CreateTodo = () => {
 
                 <div className="flex justify-end">
                   <Button type="button" onClick={handleSubmit(form)}>
-                    {i18n.get('Create')}
+                    {actionTitle}
                   </Button>
                 </div>
               </>
@@ -72,4 +75,4 @@ const CreateTodo = () => {
   );
 };
 
-export default CreateTodo;
+export default EditTodo;

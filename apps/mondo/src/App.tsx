@@ -1,6 +1,6 @@
 import { AppContainer } from 'codefee-kit';
 import Routes from './Routes';
-import 'index.css';
+import 'index.scss';
 
 const App = () => {
   return (
