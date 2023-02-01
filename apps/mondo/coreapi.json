@@ -362,14 +362,6 @@
           "Dependency"
         ]
       },
-      "TodoStatus": {
-        "type": "string",
-        "enum": [
-          "InProgress",
-          "Done",
-          "Cancel"
-        ]
-      },
       "UpdateTodoRequest": {
         "type": "object",
         "required": [

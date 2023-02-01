@@ -3,6 +3,6 @@
 /* eslint-disable */
 
 export enum TodoRelationship {
-  SUB_TASK = 'SubTask',
-  DEPENDENCY = 'Dependency',
+    SUB_TASK = 'SubTask',
+    DEPENDENCY = 'Dependency',
 }

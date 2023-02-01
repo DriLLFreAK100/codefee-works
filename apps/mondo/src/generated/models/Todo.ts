@@ -3,9 +3,10 @@
 /* eslint-disable */
 
 export type Todo = {
-  description?: string;
-  id: number;
-  status: number;
-  tags?: Array<string>;
-  title: string;
+    description?: string;
+    id: number;
+    status: number;
+    tags?: Array<string>;
+    title: string;
 };
+

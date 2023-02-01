@@ -3,8 +3,9 @@
 /* eslint-disable */
 
 export type UpdateTodoRequest = {
-  description?: string;
-  status: number;
-  tags?: Array<string>;
-  title: string;
+    description?: string;
+    status: number;
+    tags?: Array<string>;
+    title: string;
 };
+
